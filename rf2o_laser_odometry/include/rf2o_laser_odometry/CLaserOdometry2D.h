@@ -24,12 +24,21 @@
 #include <geometry_msgs/Twist.h>
 
 // MRPT related headers
+// MRPT related headers
+#include <mrpt/version.h>
+#if MRPT_VERSION>=0x130
+#	include <mrpt/obs/CObservation2DRangeScan.h>
+#   include <mrpt/obs/CObservationOdometry.h>
+    using namespace mrpt::obs;
+#else
+#	include <mrpt/slam/CObservation2DRangeScan.h>
+#   include <mrpt/slam/CObservationOdometry.h>
+    using namespace mrpt::slam;
+#endif
 #include <mrpt/system/threads.h>
 #include <mrpt/system/os.h>
 #include <mrpt/poses/CPose3D.h>
 #include <mrpt/utils.h>
-#include <mrpt/obs/CObservation2DRangeScan.h>
-#include <mrpt/obs/CObservationOdometry.h>
 #include <mrpt/opengl.h>
 #include <mrpt/math/CHistogram.h>
 
@@ -144,7 +153,7 @@ protected:
     void solveSystemNonLinear();
 	void filterLevelSolution();
 	void PoseUpdate();
-	void Reset(mrpt::poses::CPose3D ini_pose, mrpt::obs::CObservation2DRangeScan scan);	
+    void Reset(mrpt::poses::CPose3D ini_pose, CObservation2DRangeScan scan);
 };
 
 #endif
